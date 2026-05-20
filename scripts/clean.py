@@ -10,11 +10,23 @@ def main():
 
     # Drop rows with any missing values in required columns
     required_cols = ["user_id", "timestamp", "event_type", "duration_seconds"]
+
     df = df.dropna(subset=required_cols)
+
+    # ensure event_type is valid string
+    df["event_type"] = df["event_type"].astype(str)
+
+    # remove empty/invalid placeholders
+    df = df[df["event_type"].notna()]
+    df = df[df["event_type"] != ""]
 
     # Ensure duration is numeric and positive
     df["duration_seconds"] = pd.to_numeric(df["duration_seconds"], errors="coerce")
     df = df.dropna(subset=["duration_seconds"])
+    df = df[df["duration_seconds"] > 0]
+
+    # enforce integer + positive
+    df["duration_seconds"] = df["duration_seconds"].astype(int)
     df = df[df["duration_seconds"] > 0]
 
     # Parse timestamps (handles mixed formats)

@@ -8,7 +8,7 @@ def main():
 
     df = pd.read_csv(input_path)
 
-    df["duration_minutes"] = df["duration_seconds"] / 60
+    df["duration_minutes"] = df["duration_seconds"].astype(float) / 60.0
     df["weekday"] = pd.to_datetime(df["date"]).dt.day_name()
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
