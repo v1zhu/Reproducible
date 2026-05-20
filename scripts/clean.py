@@ -15,10 +15,14 @@ def main():
 
     # ensure event_type is valid string
     df["event_type"] = df["event_type"].astype(str)
+    df['event_type'] = df['event_type'].str.strip().str.lower()
+
+    valid_event_types = ["click", "scroll", "buy", "login", "view"]
 
     # remove empty/invalid placeholders
     df = df[df["event_type"].notna()]
     df = df[df["event_type"] != ""]
+    df = df[df["event_type"].isin(valid_event_types)]
 
     # Ensure duration is numeric and positive
     df["duration_seconds"] = pd.to_numeric(df["duration_seconds"], errors="coerce")
