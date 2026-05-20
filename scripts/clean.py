@@ -17,7 +17,7 @@ def main():
     df["event_type"] = df["event_type"].astype(str)
     df['event_type'] = df['event_type'].str.strip().str.lower()
 
-    valid_event_types = ["click", "scroll", "buy", "login", "view"]
+    valid_event_types = ['click', 'login', 'purchase', 'scroll', 'view']
 
     # remove empty/invalid placeholders
     df = df[df["event_type"].notna()]
